@@ -2,8 +2,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
 
-import com.sun.javafx.geom.Ellipse2D;
-
 import java.util.ArrayList;
 
 @SuppressWarnings("serial")

@@ -1,7 +1,16 @@
 import java.util.ArrayList;
 
 public class SecantMethod {
-	private static final double EPSILON = 1e-4;
+	private static double EPSILON = 1e-4;
+	
+	public static void setEpsilon(double eps) {
+		EPSILON = eps;
+	}
+	
+	public static double getEpsilon()  {
+		return EPSILON;
+	}
+	
 	
 	private IAbstractFunction func;
 	private ArrayList<Double> ls = new ArrayList<Double>();
@@ -39,6 +48,8 @@ public class SecantMethod {
 			
 			ls.add(Double.valueOf(l));
 			rs.add(Double.valueOf(r));
+			
+			System.out.println("abs = " + String.valueOf(abs));
 			
 			if(Math.abs(abs - oldAbs) <= EPSILON)
 				return m;

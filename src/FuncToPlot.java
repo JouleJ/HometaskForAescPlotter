@@ -1,7 +1,7 @@
 class G1 implements IAbstractFunction {
 	@Override
 	public double apply(double x) {
-		return Math.exp(0.1 * x) -  x * x - 100;
+		return 0.0;
 	}
 }
 

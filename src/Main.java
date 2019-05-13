@@ -1,6 +1,8 @@
 import javax.swing.*;
 
 import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -130,6 +132,44 @@ class RunSecantMethod implements ActionListener {
 	}
 };
 
+class ChangeIntEpsilon implements ActionListener {
+	JTextField textField;
+	PlotterPanel plotter;
+	
+	public ChangeIntEpsilon(JTextField _textField, PlotterPanel _plotter) {
+		textField = _textField;
+		plotter = _plotter;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		String text = textField.getText();
+		double eps = Double.parseDouble(text);
+		
+		Integrator.setEpsilon(eps);
+		plotter.repaint();
+	}
+};
+
+class ChangeSecantEpsilon implements ActionListener {
+	JTextField textField;
+	PlotterPanel plotter;
+	
+	public ChangeSecantEpsilon(JTextField _textField, PlotterPanel _plotter) {
+		textField = _textField;
+		plotter = _plotter;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		String text = textField.getText();
+		double eps = Double.parseDouble(text);
+		
+		SecantMethod.setEpsilon(eps);
+		plotter.repaint();
+	}
+};
+
 public class Main {
 
 	public static final int WINDOW_SIZE = 800;
@@ -140,6 +180,9 @@ public class Main {
 		
 		JPanel root = new JPanel();
 		root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
+		
+		JPanel right = new JPanel();
+		right.setLayout(new GridLayout(4, 2));
 		
 		PlotterPanel plotter = new PlotterPanel(new FuncToPlot());
 		
@@ -155,12 +198,25 @@ public class Main {
 		Button buttonRunSecantMethod = new Button("Run Secant Method");
 		buttonRunSecantMethod.addActionListener(new RunSecantMethod(plotter));
 		
+		JTextField intEpsilon = new JTextField(String.valueOf(Integrator.getEpsilon()));
+		JTextField secantEpsilon = new JTextField(String.valueOf(SecantMethod.getEpsilon()));
+		
+		intEpsilon.addActionListener(new ChangeIntEpsilon(intEpsilon, plotter));
+		secantEpsilon.addActionListener(new ChangeSecantEpsilon(secantEpsilon, plotter));
+		
+		right.add(new Label("Plotting rectangle coordinates"));
+		right.add(rectangleTextField);
+		right.add(new Label("Plotting interval"));
+		right.add(intervalTextField);
+		
+		right.add(new Label("Intergrating epsilon"));
+		right.add(intEpsilon);
+		right.add(new Label("Secant method epsilon"));
+		right.add(secantEpsilon);
+		
 		root.add(plotter);
-		root.add(new Label("Plotting rectangle coordinates"));
-		root.add(rectangleTextField);
-		root.add(new Label("Plotting interval"));
-		root.add(intervalTextField);
 		root.add(buttonRunSecantMethod);
+		root.add(right);
 		
 		frame.setContentPane(root);
 		frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
